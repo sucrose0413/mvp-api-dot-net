@@ -292,15 +292,15 @@ namespace MVP.Models
                     throw new ValidationException(ValidationRules.Pattern, "ReferenceUrl", "^((https?|ftp):\\/\\/)?(((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?)(:\\d*)?)(\\/((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)+(\\/(([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)*)*)?)?(\\?((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)|[\\uE000-\\uF8FF]|\\/|\\?)*)?(\\#((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)|\\/|\\?)*)?$");
                 }
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(this.AnnualQuantity, "^[0-9]*$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(this.AnnualQuantity.ToString(), "^[0-9]*$"))
             {
                 throw new ValidationException(ValidationRules.Pattern, "AnnualQuantity", "^[0-9]*$");
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(this.SecondAnnualQuantity, "^[0-9]*$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(this.SecondAnnualQuantity.ToString(), "^[0-9]*$"))
             {
                 throw new ValidationException(ValidationRules.Pattern, "SecondAnnualQuantity", "^[0-9]*$");
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(this.AnnualReach, "^[0-9]*$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(this.AnnualReach.ToString(), "^[0-9]*$"))
             {
                 throw new ValidationException(ValidationRules.Pattern, "AnnualReach", "^[0-9]*$");
             }
