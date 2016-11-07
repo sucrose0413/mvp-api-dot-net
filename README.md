@@ -1,2 +1,4 @@
-# mvp-api-dot-net
-.NET SDK for MVP API
+﻿# .NET SDK for MVP API
+
+This just starts with a simple SWAGGER and AutoRest generated SDK. Hopefully, goes wild in time ;)
+
