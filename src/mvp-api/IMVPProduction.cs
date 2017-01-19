@@ -14,7 +14,6 @@ namespace MVP
     using Models;
 
     /// <summary>
-    /// MVP API Production
     /// </summary>
     public partial interface IMVPProduction : IDisposable
     {
@@ -78,7 +77,7 @@ namespace MVP
         /// Gets a Contribution item by id
         /// </summary>
         /// <param name='id'>
-        /// Format - int32. Contribution ID (model PrivateSiteId value)
+        /// Format - int32. ContributionId
         /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
@@ -92,7 +91,7 @@ namespace MVP
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Contribution>> GetContributionByIdWithHttpMessagesAsync(int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ContributionsModel>> GetContributionByIdWithHttpMessagesAsync(int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates a Contribution item
@@ -103,7 +102,8 @@ namespace MVP
         /// <param name='ocpApimSubscriptionKey'>
         /// subscription key in header
         /// </param>
-        /// <param name='activityViewModel'>
+        /// <param name='contributionsModel'>
+        /// ContributionsModel object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,7 +111,7 @@ namespace MVP
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> PutContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> PutContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Creates a new Contribution item
@@ -122,7 +122,8 @@ namespace MVP
         /// <param name='ocpApimSubscriptionKey'>
         /// subscription key in header
         /// </param>
-        /// <param name='activityViewModel'>
+        /// <param name='contributionsModel'>
+        /// ContributionsModel object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -130,7 +131,7 @@ namespace MVP
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Deletes a Contribution item
@@ -179,6 +180,7 @@ namespace MVP
         /// subscription key in header
         /// </param>
         /// <param name='onlineIdentityViewModel'>
+        /// OnlineIdentityViewModel model
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -198,6 +200,7 @@ namespace MVP
         /// subscription key in header
         /// </param>
         /// <param name='onlineIdentityViewModel'>
+        /// OnlineIdentityViewModel object
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -336,7 +339,7 @@ namespace MVP
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<ActivityTypeViewModel>>> GetContributionTypesWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ContributionTypeModel>>> GetContributionTypesWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

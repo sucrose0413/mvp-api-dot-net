@@ -21,16 +21,16 @@ namespace MVP.Models
         /// <summary>
         /// Initializes a new instance of the ContributionsModel class.
         /// </summary>
-        public ContributionsModel(int? contributionId = default(int?), string contributionTypeName = default(string), ActivityTypeViewModel activityType = default(ActivityTypeViewModel), ActivityTechnologyViewModel applicableTechnology = default(ActivityTechnologyViewModel), DateTime? dateOfActivity = default(DateTime?), string titleOfActivity = default(string), string referenceUrl = default(string), VisibilityViewModel activityVisibility = default(VisibilityViewModel), int? annualQuantity = default(int?), int? secondAnnualQuantity = default(int?), int? annualReach = default(int?), string description = default(string))
+        public ContributionsModel(int? contributionId = default(int?), string contributionTypeName = default(string), ContributionTypeModel contributionType = default(ContributionTypeModel), ContributionTechnologyModel contributionTechnology = default(ContributionTechnologyModel), DateTime? startDate = default(DateTime?), string title = default(string), string referenceUrl = default(string), VisibilityViewModel visibility = default(VisibilityViewModel), int? annualQuantity = default(int?), int? secondAnnualQuantity = default(int?), int? annualReach = default(int?), string description = default(string))
         {
             ContributionId = contributionId;
             ContributionTypeName = contributionTypeName;
-            ActivityType = activityType;
-            ApplicableTechnology = applicableTechnology;
-            DateOfActivity = dateOfActivity;
-            TitleOfActivity = titleOfActivity;
+            ContributionType = contributionType;
+            ContributionTechnology = contributionTechnology;
+            StartDate = startDate;
+            Title = title;
             ReferenceUrl = referenceUrl;
-            ActivityVisibility = activityVisibility;
+            Visibility = visibility;
             AnnualQuantity = annualQuantity;
             SecondAnnualQuantity = secondAnnualQuantity;
             AnnualReach = annualReach;
@@ -52,26 +52,26 @@ namespace MVP.Models
         /// <summary>
         /// Gets or sets the contribution type.
         /// </summary>
-        [JsonProperty(PropertyName = "ActivityType")]
-        public ActivityTypeViewModel ActivityType { get; set; }
+        [JsonProperty(PropertyName = "ContributionType")]
+        public ContributionTypeModel ContributionType { get; set; }
 
         /// <summary>
         /// Gets or sets the contribution technology.
         /// </summary>
-        [JsonProperty(PropertyName = "ApplicableTechnology")]
-        public ActivityTechnologyViewModel ApplicableTechnology { get; set; }
+        [JsonProperty(PropertyName = "ContributionTechnology")]
+        public ContributionTechnologyModel ContributionTechnology { get; set; }
 
         /// <summary>
         /// Gets or sets the start date.
         /// </summary>
-        [JsonProperty(PropertyName = "DateOfActivity")]
-        public DateTime? DateOfActivity { get; set; }
+        [JsonProperty(PropertyName = "StartDate")]
+        public DateTime? StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
-        [JsonProperty(PropertyName = "TitleOfActivity")]
-        public string TitleOfActivity { get; set; }
+        [JsonProperty(PropertyName = "Title")]
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the url.
@@ -82,8 +82,8 @@ namespace MVP.Models
         /// <summary>
         /// Gets or sets the visibility.
         /// </summary>
-        [JsonProperty(PropertyName = "ActivityVisibility")]
-        public VisibilityViewModel ActivityVisibility { get; set; }
+        [JsonProperty(PropertyName = "Visibility")]
+        public VisibilityViewModel Visibility { get; set; }
 
         /// <summary>
         /// Gets or sets the annual quantity.
@@ -109,15 +109,5 @@ namespace MVP.Models
         [JsonProperty(PropertyName = "Description")]
         public string Description { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (this.ApplicableTechnology != null)
-            {
-                this.ApplicableTechnology.Validate();
-            }
-        }
     }
 }

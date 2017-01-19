@@ -11,43 +11,48 @@ namespace MVP.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
 
-    public partial class ContributionTechnology
+    public partial class ContributionTechnologyModel
     {
         /// <summary>
-        /// Initializes a new instance of the ContributionTechnology class.
+        /// Initializes a new instance of the ContributionTechnologyModel
+        /// class.
         /// </summary>
-        public ContributionTechnology() { }
+        public ContributionTechnologyModel() { }
 
         /// <summary>
-        /// Initializes a new instance of the ContributionTechnology class.
+        /// Initializes a new instance of the ContributionTechnologyModel
+        /// class.
         /// </summary>
-        public ContributionTechnology(Guid? contributionTechnologyId = default(Guid?), string name = default(string), Program program = default(Program), AwardCategory awardCategory = default(AwardCategory))
+        public ContributionTechnologyModel(Guid? id = default(Guid?), string name = default(string), string awardName = default(string), string awardCategory = default(string))
         {
-            ContributionTechnologyId = contributionTechnologyId;
+            Id = id;
             Name = name;
-            Program = program;
+            AwardName = awardName;
             AwardCategory = awardCategory;
         }
 
         /// <summary>
+        /// Gets or sets the id.
         /// </summary>
-        [JsonProperty(PropertyName = "ContributionTechnologyId")]
-        public Guid? ContributionTechnologyId { get; set; }
+        [JsonProperty(PropertyName = "Id")]
+        public Guid? Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the name.
         /// </summary>
         [JsonProperty(PropertyName = "Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Program")]
-        public Program Program { get; set; }
+        [JsonProperty(PropertyName = "AwardName")]
+        public string AwardName { get; set; }
 
         /// <summary>
+        /// Property to hold the Award Category value
         /// </summary>
         [JsonProperty(PropertyName = "AwardCategory")]
-        public AwardCategory AwardCategory { get; set; }
+        public string AwardCategory { get; set; }
 
     }
 }

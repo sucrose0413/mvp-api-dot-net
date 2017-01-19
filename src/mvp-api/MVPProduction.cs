@@ -20,9 +20,6 @@ namespace MVP
     using Newtonsoft.Json;
     using Models;
 
-    /// <summary>
-    /// MVP API Production
-    /// </summary>
     public partial class MVPProduction : ServiceClient<MVPProduction>, IMVPProduction
     {
         /// <summary>
@@ -401,7 +398,7 @@ namespace MVP
         /// Gets a Contribution item by id
         /// </summary>
         /// <param name='id'>
-        /// Format - int32. Contribution ID (model PrivateSiteId value)
+        /// Format - int32. ContributionId
         /// </param>
         /// <param name='subscriptionKey'>
         /// subscription key in url
@@ -418,7 +415,7 @@ namespace MVP
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Contribution>> GetContributionByIdWithHttpMessagesAsync(int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ContributionsModel>> GetContributionByIdWithHttpMessagesAsync(int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -506,7 +503,7 @@ namespace MVP
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<Contribution>();
+            var _result = new HttpOperationResponse<ContributionsModel>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -515,7 +512,7 @@ namespace MVP
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Contribution>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ContributionsModel>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -543,7 +540,8 @@ namespace MVP
         /// <param name='ocpApimSubscriptionKey'>
         /// subscription key in header
         /// </param>
-        /// <param name='activityViewModel'>
+        /// <param name='contributionsModel'>
+        /// ContributionsModel object
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -554,12 +552,8 @@ namespace MVP
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> PutContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> PutContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (activityViewModel != null)
-            {
-                activityViewModel.Validate();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -569,7 +563,7 @@ namespace MVP
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionKey", subscriptionKey);
                 tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
-                tracingParameters.Add("activityViewModel", activityViewModel);
+                tracingParameters.Add("contributionsModel", contributionsModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "PutContribution", tracingParameters);
             }
@@ -613,9 +607,9 @@ namespace MVP
 
             // Serialize Request
             string _requestContent = null;
-            if(activityViewModel != null)
+            if(contributionsModel != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(activityViewModel, this.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(contributionsModel, this.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -633,7 +627,7 @@ namespace MVP
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200 && (int)_statusCode != 500)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -670,7 +664,8 @@ namespace MVP
         /// <param name='ocpApimSubscriptionKey'>
         /// subscription key in header
         /// </param>
-        /// <param name='activityViewModel'>
+        /// <param name='contributionsModel'>
+        /// ContributionsModel object
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -681,12 +676,8 @@ namespace MVP
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostContributionWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (activityViewModel != null)
-            {
-                activityViewModel.Validate();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -696,7 +687,7 @@ namespace MVP
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionKey", subscriptionKey);
                 tracingParameters.Add("ocpApimSubscriptionKey", ocpApimSubscriptionKey);
-                tracingParameters.Add("activityViewModel", activityViewModel);
+                tracingParameters.Add("contributionsModel", contributionsModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "PostContribution", tracingParameters);
             }
@@ -740,9 +731,9 @@ namespace MVP
 
             // Serialize Request
             string _requestContent = null;
-            if(activityViewModel != null)
+            if(contributionsModel != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(activityViewModel, this.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(contributionsModel, this.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -760,7 +751,7 @@ namespace MVP
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 400 && (int)_statusCode != 500)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -805,7 +796,7 @@ namespace MVP
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Contribution>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ContributionsModel>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1103,6 +1094,7 @@ namespace MVP
         /// subscription key in header
         /// </param>
         /// <param name='onlineIdentityViewModel'>
+        /// OnlineIdentityViewModel model
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1192,7 +1184,7 @@ namespace MVP
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200 && (int)_statusCode != 500)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1230,6 +1222,7 @@ namespace MVP
         /// subscription key in header
         /// </param>
         /// <param name='onlineIdentityViewModel'>
+        /// OnlineIdentityViewModel object
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1319,7 +1312,7 @@ namespace MVP
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 400)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 500)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -2203,7 +2196,7 @@ namespace MVP
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ActivityTypeViewModel>>> GetContributionTypesWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<ContributionTypeModel>>> GetContributionTypesWithHttpMessagesAsync(string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2289,7 +2282,7 @@ namespace MVP
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ActivityTypeViewModel>>();
+            var _result = new HttpOperationResponse<IList<ContributionTypeModel>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -2298,7 +2291,7 @@ namespace MVP
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IList<ActivityTypeViewModel>>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<ContributionTypeModel>>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

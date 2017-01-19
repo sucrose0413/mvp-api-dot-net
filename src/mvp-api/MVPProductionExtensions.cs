@@ -113,7 +113,7 @@ namespace MVP
             /// The operations group for this extension method.
             /// </param>
             /// <param name='id'>
-            /// Format - int32. Contribution ID (model PrivateSiteId value)
+            /// Format - int32. ContributionId
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -121,7 +121,7 @@ namespace MVP
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static Contribution GetContributionById(this IMVPProduction operations, int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static ContributionsModel GetContributionById(this IMVPProduction operations, int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
                 return Task.Factory.StartNew(s => ((IMVPProduction)s).GetContributionByIdAsync(id, subscriptionKey, ocpApimSubscriptionKey), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -133,7 +133,7 @@ namespace MVP
             /// The operations group for this extension method.
             /// </param>
             /// <param name='id'>
-            /// Format - int32. Contribution ID (model PrivateSiteId value)
+            /// Format - int32. ContributionId
             /// </param>
             /// <param name='subscriptionKey'>
             /// subscription key in url
@@ -144,7 +144,7 @@ namespace MVP
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Contribution> GetContributionByIdAsync(this IMVPProduction operations, int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContributionsModel> GetContributionByIdAsync(this IMVPProduction operations, int id, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetContributionByIdWithHttpMessagesAsync(id, subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -164,11 +164,12 @@ namespace MVP
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            /// <param name='activityViewModel'>
+            /// <param name='contributionsModel'>
+            /// ContributionsModel object
             /// </param>
-            public static void PutContribution(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel))
+            public static void PutContribution(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel))
             {
-                Task.Factory.StartNew(s => ((IMVPProduction)s).PutContributionAsync(subscriptionKey, ocpApimSubscriptionKey, activityViewModel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IMVPProduction)s).PutContributionAsync(subscriptionKey, ocpApimSubscriptionKey, contributionsModel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,14 +184,15 @@ namespace MVP
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            /// <param name='activityViewModel'>
+            /// <param name='contributionsModel'>
+            /// ContributionsModel object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PutContributionAsync(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PutContributionAsync(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.PutContributionWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, activityViewModel, null, cancellationToken).ConfigureAwait(false);
+                await operations.PutContributionWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, contributionsModel, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -205,11 +207,12 @@ namespace MVP
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            /// <param name='activityViewModel'>
+            /// <param name='contributionsModel'>
+            /// ContributionsModel object
             /// </param>
-            public static object PostContribution(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel))
+            public static object PostContribution(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel))
             {
-                return Task.Factory.StartNew(s => ((IMVPProduction)s).PostContributionAsync(subscriptionKey, ocpApimSubscriptionKey, activityViewModel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IMVPProduction)s).PostContributionAsync(subscriptionKey, ocpApimSubscriptionKey, contributionsModel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -224,14 +227,15 @@ namespace MVP
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            /// <param name='activityViewModel'>
+            /// <param name='contributionsModel'>
+            /// ContributionsModel object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostContributionAsync(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ActivityViewModel activityViewModel = default(ActivityViewModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostContributionAsync(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), ContributionsModel contributionsModel = default(ContributionsModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostContributionWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, activityViewModel, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostContributionWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, contributionsModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -336,6 +340,7 @@ namespace MVP
             /// subscription key in header
             /// </param>
             /// <param name='onlineIdentityViewModel'>
+            /// OnlineIdentityViewModel model
             /// </param>
             public static void PutOnlineIdentity(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), OnlineIdentityViewModel onlineIdentityViewModel = default(OnlineIdentityViewModel))
             {
@@ -355,6 +360,7 @@ namespace MVP
             /// subscription key in header
             /// </param>
             /// <param name='onlineIdentityViewModel'>
+            /// OnlineIdentityViewModel model
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -377,6 +383,7 @@ namespace MVP
             /// subscription key in header
             /// </param>
             /// <param name='onlineIdentityViewModel'>
+            /// OnlineIdentityViewModel object
             /// </param>
             public static object PostOnlineIdentity(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), OnlineIdentityViewModel onlineIdentityViewModel = default(OnlineIdentityViewModel))
             {
@@ -396,6 +403,7 @@ namespace MVP
             /// subscription key in header
             /// </param>
             /// <param name='onlineIdentityViewModel'>
+            /// OnlineIdentityViewModel object
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -681,7 +689,7 @@ namespace MVP
             /// <param name='ocpApimSubscriptionKey'>
             /// subscription key in header
             /// </param>
-            public static IList<ActivityTypeViewModel> GetContributionTypes(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
+            public static IList<ContributionTypeModel> GetContributionTypes(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string))
             {
                 return Task.Factory.StartNew(s => ((IMVPProduction)s).GetContributionTypesAsync(subscriptionKey, ocpApimSubscriptionKey), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -701,7 +709,7 @@ namespace MVP
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ActivityTypeViewModel>> GetContributionTypesAsync(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ContributionTypeModel>> GetContributionTypesAsync(this IMVPProduction operations, string subscriptionKey = default(string), string ocpApimSubscriptionKey = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetContributionTypesWithHttpMessagesAsync(subscriptionKey, ocpApimSubscriptionKey, null, cancellationToken).ConfigureAwait(false))
                 {
