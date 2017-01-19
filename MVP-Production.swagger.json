@@ -2,8 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "MVP Production",
-    "version": "1.0",
-    "description": "MVP API Production"
+    "version": "1.0"
   },
   "host": "mvpapi.azure-api.net",
   "basePath": "/mvp",
@@ -31,7 +30,7 @@
         ],
         "responses": {
           "200": {
-            "description": "JSON only formatted list of contribution areas"
+            "description": "IEnumerable ContributionAreaViewModel"
           }
         },
         "produces": [
@@ -98,7 +97,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "Format - int32. Contribution ID (model PrivateSiteId value)",
+            "description": "Format - int32. ContributionId",
             "required": true,
             "type": "integer"
           },
@@ -119,7 +118,7 @@
           "200": {
             "description": "OK. Contribution object",
             "schema": {
-              "$ref": "#/definitions/Contribution"
+              "$ref": "#/definitions/ContributionsModel"
             }
           }
         },
@@ -149,11 +148,12 @@
             "type": "string"
           },
           {
-            "name": "activityViewModel",
+            "name": "contributionsModel",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/ActivityViewModel"
-            }
+              "$ref": "#/definitions/ContributionsModel"
+            },
+            "description": "ContributionsModel object"
           }
         ],
         "consumes": [
@@ -167,8 +167,8 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "BadRequest"
+          "500": {
+            "description": "InternalServerError"
           }
         },
         "produces": [
@@ -195,11 +195,12 @@
             "type": "string"
           },
           {
-            "name": "activityViewModel",
+            "name": "contributionsModel",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/ActivityViewModel"
-            }
+              "$ref": "#/definitions/ContributionsModel"
+            },
+            "description": "ContributionsModel object"
           }
         ],
         "consumes": [
@@ -217,13 +218,16 @@
             }
           },
           "201": {
-            "description": "Newly created Contribution item",
+            "description": "Newly created ContributionsModel item",
             "schema": {
-              "$ref": "#/definitions/Contribution"
+              "$ref": "#/definitions/ContributionsModel"
             }
           },
           "400": {
             "description": "BadRequest"
+          },
+          "500": {
+            "description": "InternalServerError"
           }
         },
         "produces": [
@@ -333,7 +337,8 @@
             "in": "body",
             "schema": {
               "$ref": "#/definitions/OnlineIdentityViewModel"
-            }
+            },
+            "description": "OnlineIdentityViewModel model"
           }
         ],
         "consumes": [
@@ -347,8 +352,8 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "BadRequest"
+          "500": {
+            "description": "InternalServerError"
           }
         },
         "produces": [
@@ -379,7 +384,8 @@
             "in": "body",
             "schema": {
               "$ref": "#/definitions/OnlineIdentityViewModel"
-            }
+            },
+            "description": "OnlineIdentityViewModel object"
           }
         ],
         "consumes": [
@@ -402,8 +408,8 @@
               "$ref": "#/definitions/OnlineIdentity"
             }
           },
-          "400": {
-            "description": "BadRequest"
+          "500": {
+            "description": "InternalServerError"
           }
         },
         "produces": [
@@ -672,7 +678,7 @@
           "200": {
             "description": "OK. IOrderedEnumerable object.",
             "schema": {
-              "$ref": "#/definitions/ActivityTypeViewModelArray"
+              "$ref": "#/definitions/ContributionTypeModelArray"
             }
           }
         },
@@ -686,8 +692,7 @@
     }
   },
   "definitions": {
-    "ActivityTypeViewModel": {
-      "description": "The activity type.",
+    "ContributionTypeModel": {
       "type": "object",
       "properties": {
         "Id": {
@@ -696,7 +701,7 @@
           "type": "string"
         },
         "Name": {
-          "description": "Gets or sets the name.",
+          "description": "Gets or sets the localized name.",
           "type": "string"
         },
         "EnglishName": {
@@ -736,20 +741,20 @@
           "description": "Name of the contribution type",
           "type": "string"
         },
-        "ActivityType": {
-          "$ref": "#/definitions/ActivityTypeViewModel",
+        "ContributionType": {
+          "$ref": "#/definitions/ContributionTypeModel",
           "description": "Gets or sets the contribution type."
         },
-        "ApplicableTechnology": {
-          "$ref": "#/definitions/ActivityTechnologyViewModel",
+        "ContributionTechnology": {
+          "$ref": "#/definitions/ContributionTechnologyModel",
           "description": "Gets or sets the contribution technology."
         },
-        "DateOfActivity": {
+        "StartDate": {
           "format": "date-time",
           "description": "Gets or sets the start date.",
           "type": "string"
         },
-        "TitleOfActivity": {
+        "Title": {
           "description": "Gets or sets the title.",
           "type": "string"
         },
@@ -757,7 +762,7 @@
           "description": "Gets or sets the url.",
           "type": "string"
         },
-        "ActivityVisibility": {
+        "Visibility": {
           "$ref": "#/definitions/VisibilityViewModel",
           "description": "Gets or sets the visibility."
         },
@@ -782,11 +787,7 @@
         }
       }
     },
-    "ActivityTechnologyViewModel": {
-      "description": "The activity technology model.",
-      "required": [
-        "Id"
-      ],
+    "ContributionTechnologyModel": {
       "type": "object",
       "properties": {
         "Id": {
@@ -804,13 +805,6 @@
         "AwardCategory": {
           "description": "Property to hold the Award Category value",
           "type": "string"
-        },
-        "Statuscode": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Active": {
-          "type": "boolean"
         }
       }
     },
@@ -832,195 +826,84 @@
         }
       }
     },
-    "Contribution": {
+    "OnlineIdentityViewModel": {
+      "required": [
+        "SocialNetwork",
+        "Url"
+      ],
       "type": "object",
       "properties": {
         "PrivateSiteId": {
           "format": "int32",
           "type": "integer"
         },
-        "ContributionId": {
-          "type": "string"
-        },
-        "ContributionsId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "MvpGuid": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "Contributor": {
-          "type": "string"
-        },
-        "AnnualQuantity": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "SecondAnnualQuantity": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "StartDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "EndDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "OnlinePropertyName": {
-          "$ref": "#/definitions/SocialNetwork"
+        "SocialNetwork": {
+          "$ref": "#/definitions/SocialNetworkViewModel"
         },
         "Url": {
+          "maxLength": 490,
+          "minLength": 0,
+          "pattern": "^((https?|ftp):\\/\\/)?(((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?)(:\\d*)?)(\\/((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)+(\\/(([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)*)*)?)?(\\?((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)|[\\uE000-\\uF8FF]|\\/|\\?)*)?(\\#((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)|\\/|\\?)*)?$",
           "type": "string"
         },
-        "Title": {
-          "type": "string"
+        "OnlineIdentityVisibility": {
+          "$ref": "#/definitions/VisibilityViewModel"
         },
-        "ContributionTechnology": {
-          "$ref": "#/definitions/ContributionTechnology"
-        },
-        "ContributionType": {
-          "$ref": "#/definitions/ContributionType"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "AnnualReach": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "AwardPeriod": {
-          "$ref": "#/definitions/AwardCycle"
-        },
-        "ForumLanguage": {
-          "$ref": "#/definitions/Language"
-        },
-        "Visibility": {
-          "$ref": "#/definitions/SharingPreference"
-        },
-        "BelongToLatestAwardCycle": {
+        "ContributionCollected": {
           "type": "boolean"
         },
-        "OnlineIdentity": {
-          "$ref": "#/definitions/OnlineIdentity"
+        "DisplayName": {
+          "maxLength": 500,
+          "minLength": 0,
+          "type": "string"
         },
-        "DataSource": {
-          "format": "int32",
-          "type": "integer"
+        "UserId": {
+          "maxLength": 500,
+          "minLength": 0,
+          "type": "string"
         },
-        "ApplicableTechnology": {
-          "$ref": "#/definitions/Technology"
+        "MicrosoftAccount": {
+          "maxLength": 500,
+          "minLength": 0,
+          "type": "string"
+        },
+        "PrivacyConsentStatus": {
+          "type": "boolean"
+        },
+        "PrivacyConsentCheckStatus": {
+          "type": "boolean"
+        },
+        "PrivacyConsentCheckDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "PrivacyConsentUnCheckDate": {
+          "format": "date-time",
+          "type": "string"
         },
         "Submitted": {
           "type": "boolean"
         }
       }
     },
-    "SocialNetwork": {
-      "type": "object",
-      "properties": {
-        "SocialNetworkId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "Website": {
-          "type": "string"
-        },
-        "StatusCode": {
-          "$ref": "#/definitions/SocialNetworkStatusCode"
-        },
-        "SystemCollectionEnabled": {
-          "type": "boolean"
-        }
-      }
-    },
-    "ContributionTechnology": {
-      "type": "object",
-      "properties": {
-        "ContributionTechnologyId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "Program": {
-          "$ref": "#/definitions/Program"
-        },
-        "AwardCategory": {
-          "$ref": "#/definitions/AwardCategory"
-        }
-      }
-    },
-    "ContributionType": {
-      "type": "object",
-      "properties": {
-        "ContributionTypeId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "TypeName": {
-          "type": "string"
-        },
-        "ContributionCategory": {
-          "$ref": "#/definitions/ContributionTypeContributionCategory"
-        }
-      }
-    },
-    "AwardCycle": {
-      "type": "object",
-      "properties": {
-        "AwardCycleId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "AwardPeriodEndDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "AwardPeriodStartDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "StartDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "EndDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        }
-      }
-    },
-    "Language": {
-      "type": "object",
-      "properties": {
-        "LanguageId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        }
-      }
-    },
-    "SharingPreference": {
+    "SocialNetworkViewModel": {
+      "required": [
+        "Id"
+      ],
       "type": "object",
       "properties": {
         "Id": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "Description": {
+          "format": "uuid",
           "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "IconUrl": {
+          "type": "string"
+        },
+        "SystemCollectionEnabled": {
+          "type": "boolean"
         }
       }
     },
@@ -1071,24 +954,35 @@
         }
       }
     },
-    "Technology": {
+    "SharingPreference": {
       "type": "object",
       "properties": {
-        "TechnologyId": {
+        "Id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Description": {
+          "type": "string"
+        }
+      }
+    },
+    "SocialNetwork": {
+      "type": "object",
+      "properties": {
+        "SocialNetworkId": {
           "format": "uuid",
           "type": "string"
         },
         "Name": {
           "type": "string"
         },
-        "Category": {
-          "$ref": "#/definitions/AwardCategory"
+        "Website": {
+          "type": "string"
         },
-        "statuscode": {
-          "format": "int32",
-          "type": "integer"
+        "StatusCode": {
+          "$ref": "#/definitions/SocialNetworkStatusCode"
         },
-        "active": {
+        "SystemCollectionEnabled": {
           "type": "boolean"
         }
       }
@@ -1105,39 +999,133 @@
         }
       }
     },
-    "Program": {
+    "ProfileViewModel": {
       "type": "object",
       "properties": {
-        "Id": {
+        "Metadata": {
+          "$ref": "#/definitions/ContentMetadata"
+        },
+        "MvpId": {
+          "type": "string"
+        },
+        "YearsAsMvp": {
           "format": "int32",
           "type": "integer"
+        },
+        "FirstAwardYear": {
+          "type": "string"
+        },
+        "AwardCategoryDisplay": {
+          "type": "string"
+        },
+        "TechnicalExpertise": {
+          "type": "string"
+        },
+        "InTheSpotlight": {
+          "type": "boolean"
+        },
+        "Headline": {
+          "type": "string"
+        },
+        "Biography": {
+          "type": "string"
+        },
+        "DisplayName": {
+          "type": "string"
+        },
+        "FullName": {
+          "type": "string"
+        },
+        "PrimaryEmailAddress": {
+          "type": "string"
+        },
+        "ShippingCountry": {
+          "type": "string"
+        },
+        "ShippingStateCity": {
+          "type": "string"
+        },
+        "Languages": {
+          "type": "string"
+        },
+        "OnlineIdentities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OnlineIdentityViewModel"
+          }
+        },
+        "Certifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CertificationViewModel"
+          }
+        },
+        "Activities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityViewModel"
+          }
+        },
+        "CommunityAwards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AwardRecognitionViewModel"
+          }
+        },
+        "NewsHighlights": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MvpHighlightViewModel"
+          }
+        },
+        "UpcomingEvent": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MvpHighlightViewModel"
+          }
+        }
+      }
+    },
+    "ContentMetadata": {
+      "type": "object",
+      "properties": {
+        "PageTitle": {
+          "type": "string"
+        },
+        "TemplateName": {
+          "type": "string"
+        },
+        "Keywords": {
+          "type": "string"
         },
         "Description": {
           "type": "string"
         }
       }
     },
-    "AwardCategory": {
+    "CertificationViewModel": {
+      "description": "The account certification view model for edit.",
       "type": "object",
       "properties": {
-        "AwardCategoryId": {
+        "PrivateSiteId": {
+          "format": "int32",
+          "description": "Gets or sets the private site id.",
+          "type": "integer"
+        },
+        "Id": {
           "format": "uuid",
+          "description": "Gets or sets the id.",
           "type": "string"
         },
-        "Name": {
+        "Title": {
+          "description": "Gets or sets the title.",
+          "maxLength": 100,
+          "minLength": 0,
           "type": "string"
-        }
-      }
-    },
-    "ContributionTypeContributionCategory": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "int32",
-          "type": "integer"
         },
-        "Description": {
-          "type": "string"
+        "CertificationVisibility": {
+          "$ref": "#/definitions/VisibilityViewModel",
+          "description": "Gets or sets the certification visibility."
         }
       }
     },
@@ -1273,217 +1261,6 @@
         }
       }
     },
-    "OnlineIdentityViewModel": {
-      "required": [
-        "SocialNetwork",
-        "Url"
-      ],
-      "type": "object",
-      "properties": {
-        "PrivateSiteId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "SocialNetwork": {
-          "$ref": "#/definitions/SocialNetworkViewModel"
-        },
-        "Url": {
-          "maxLength": 490,
-          "minLength": 0,
-          "pattern": "^((https?|ftp):\\/\\/)?(((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-zA-Z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-zA-Z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?)(:\\d*)?)(\\/((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)+(\\/(([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)*)*)?)?(\\?((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)|[\\uE000-\\uF8FF]|\\/|\\?)*)?(\\#((([a-zA-Z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(%[\\da-fA-F]{2})|[!\\$&amp;'\\(\\)\\*\\+,;=]|:|@)|\\/|\\?)*)?$",
-          "type": "string"
-        },
-        "OnlineIdentityVisibility": {
-          "$ref": "#/definitions/VisibilityViewModel"
-        },
-        "ContributionCollected": {
-          "type": "boolean"
-        },
-        "DisplayName": {
-          "maxLength": 500,
-          "minLength": 0,
-          "type": "string"
-        },
-        "UserId": {
-          "maxLength": 500,
-          "minLength": 0,
-          "type": "string"
-        },
-        "MicrosoftAccount": {
-          "maxLength": 500,
-          "minLength": 0,
-          "type": "string"
-        },
-        "PrivacyConsentStatus": {
-          "type": "boolean"
-        },
-        "PrivacyConsentCheckStatus": {
-          "type": "boolean"
-        },
-        "PrivacyConsentCheckDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "PrivacyConsentUnCheckDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "Submitted": {
-          "type": "boolean"
-        }
-      }
-    },
-    "SocialNetworkViewModel": {
-      "required": [
-        "Id"
-      ],
-      "type": "object",
-      "properties": {
-        "Id": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "IconUrl": {
-          "type": "string"
-        },
-        "SystemCollectionEnabled": {
-          "type": "boolean"
-        }
-      }
-    },
-    "ProfileViewModel": {
-      "type": "object",
-      "properties": {
-        "Metadata": {
-          "$ref": "#/definitions/ContentMetadata"
-        },
-        "MvpId": {
-          "type": "string"
-        },
-        "YearsAsMvp": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "FirstAwardYear": {
-          "type": "string"
-        },
-        "AwardCategoryDisplay": {
-          "type": "string"
-        },
-        "TechnicalExpertise": {
-          "type": "string"
-        },
-        "InTheSpotlight": {
-          "type": "boolean"
-        },
-        "Headline": {
-          "type": "string"
-        },
-        "Biography": {
-          "type": "string"
-        },
-        "DisplayName": {
-          "type": "string"
-        },
-        "FullName": {
-          "type": "string"
-        },
-        "PrimaryEmailAddress": {
-          "type": "string"
-        },
-        "ShippingCountry": {
-          "type": "string"
-        },
-        "ShippingStateCity": {
-          "type": "string"
-        },
-        "Languages": {
-          "type": "string"
-        },
-        "OnlineIdentities": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/OnlineIdentityViewModel"
-          }
-        },
-        "Certifications": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CertificationViewModel"
-          }
-        },
-        "Activities": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ActivityViewModel"
-          }
-        },
-        "CommunityAwards": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AwardRecognitionViewModel"
-          }
-        },
-        "NewsHighlights": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MvpHighlightViewModel"
-          }
-        },
-        "UpcomingEvent": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MvpHighlightViewModel"
-          }
-        }
-      }
-    },
-    "ContentMetadata": {
-      "type": "object",
-      "properties": {
-        "PageTitle": {
-          "type": "string"
-        },
-        "TemplateName": {
-          "type": "string"
-        },
-        "Keywords": {
-          "type": "string"
-        },
-        "Description": {
-          "type": "string"
-        }
-      }
-    },
-    "CertificationViewModel": {
-      "description": "The account certification view model for edit.",
-      "type": "object",
-      "properties": {
-        "PrivateSiteId": {
-          "format": "int32",
-          "description": "Gets or sets the private site id.",
-          "type": "integer"
-        },
-        "Id": {
-          "format": "uuid",
-          "description": "Gets or sets the id.",
-          "type": "string"
-        },
-        "Title": {
-          "description": "Gets or sets the title.",
-          "maxLength": 100,
-          "minLength": 0,
-          "type": "string"
-        },
-        "CertificationVisibility": {
-          "$ref": "#/definitions/VisibilityViewModel",
-          "description": "Gets or sets the certification visibility."
-        }
-      }
-    },
     "AwardRecognitionViewModel": {
       "required": [
         "Title",
@@ -1542,10 +1319,61 @@
         }
       }
     },
-    "ActivityTypeViewModelArray": {
+    "ActivityTypeViewModel": {
+      "description": "The activity type.",
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "uuid",
+          "description": "Gets or sets the id.",
+          "type": "string"
+        },
+        "Name": {
+          "description": "Gets or sets the name.",
+          "type": "string"
+        },
+        "EnglishName": {
+          "description": "Gets or sets the english name",
+          "type": "string"
+        }
+      }
+    },
+    "ActivityTechnologyViewModel": {
+      "description": "The activity technology model.",
+      "required": [
+        "Id"
+      ],
+      "type": "object",
+      "properties": {
+        "Id": {
+          "format": "uuid",
+          "description": "Gets or sets the id.",
+          "type": "string"
+        },
+        "Name": {
+          "description": "Gets or sets the name.",
+          "type": "string"
+        },
+        "AwardName": {
+          "type": "string"
+        },
+        "AwardCategory": {
+          "description": "Property to hold the Award Category value",
+          "type": "string"
+        },
+        "Statuscode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ContributionTypeModelArray": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ActivityTypeViewModel"
+        "$ref": "#/definitions/ContributionTypeModel"
       }
     },
     "ApiContributionsPost200ApplicationJsonResponse": {
