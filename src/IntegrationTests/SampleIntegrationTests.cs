@@ -18,7 +18,6 @@ namespace IntegrationTests
             MVP.MVPProduction prodClient = new MVP.MVPProduction();
             var result = prodClient.GetContributionTypesWithHttpMessagesAsync(
                 null, subscriptionKey, customHeaders).Result;
-
             Assert.AreNotEqual(0, result.Body.Count, "Contributions Types could not be fetched");
         }
     }
