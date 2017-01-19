@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IntegrationTests.Properties {
+namespace DesktopIntegrationDemo.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,24 +26,36 @@ namespace IntegrationTests.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SubscriptionKey {
+        public string auth_code {
             get {
-                return ((string)(this["SubscriptionKey"]));
+                return ((string)(this["auth_code"]));
             }
             set {
-                this["SubscriptionKey"] = value;
+                this["auth_code"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string AuthorizationBearer {
+        public string access_token {
             get {
-                return ((string)(this["AuthorizationBearer"]));
+                return ((string)(this["access_token"]));
             }
             set {
-                this["AuthorizationBearer"] = value;
+                this["access_token"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string refresh_token {
+            get {
+                return ((string)(this["refresh_token"]));
+            }
+            set {
+                this["refresh_token"] = value;
             }
         }
     }
