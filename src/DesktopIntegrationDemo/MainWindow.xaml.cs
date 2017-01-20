@@ -42,13 +42,17 @@ namespace DesktopIntegrationDemo
 
         private void BrowserWindow_LoadCompleted(object sender, NavigationEventArgs e)
         {
-            if (e.Uri.AbsoluteUri.Contains("code="))
+            if (e.Uri.AbsoluteUri.Contains("code=") )
             {
                 string auth_code = Regex.Split(e.Uri.AbsoluteUri, "code=")[1];
                 Properties.Settings.Default["auth_code"] = auth_code;
                 Properties.Settings.Default.Save();
                 browserWindow.Visibility = Visibility.Collapsed;
                 makeAccessTokenRequest(accessTokenUrl + auth_code);
+            }
+            else if (e.Uri.AbsoluteUri.Contains("lc="))
+            {
+                browserWindow.Navigate(signInUrl);
             }
         }
 
@@ -79,14 +83,12 @@ namespace DesktopIntegrationDemo
             Dictionary<string, List<string>> customHeaders = new Dictionary<string, List<string>>();
             customHeaders.Add("Authorization", new List<string>() { authorizationBearer });
             MVP.MVPProduction prodClient = new MVP.MVPProduction();
-            var result = await prodClient.GetContributionTypesWithHttpMessagesAsync(null, subscriptionKey, customHeaders);
-            var result2 = await prodClient.GetMVPProfileWithHttpMessagesAsync(null, subscriptionKey, customHeaders);
-            
+            var result = await prodClient.GetMVPProfileWithHttpMessagesAsync(null, subscriptionKey, customHeaders);
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            browserWindow.Navigate(signInUrl);
+            browserWindow.Navigate(string.Format("https://login.live.com/oauth20_logout.srf?client_id={0}&redirect_uri=https://login.live.com/oauth20_desktop.srf", client_id));
         }
     }
 }
