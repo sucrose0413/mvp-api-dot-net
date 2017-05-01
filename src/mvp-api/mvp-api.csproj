@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageId>mvpApi.daronyondem</PackageId>
+    <PackageId>mvpApi.Wrapper</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>Daron Yondem</Authors>
     <Description>A simple wrapper for Microsoft MVP Program APIs.</Description>
